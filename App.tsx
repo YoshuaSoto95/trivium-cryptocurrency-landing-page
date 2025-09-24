@@ -8,6 +8,7 @@ import Roadmap from './components/Roadmap';
 import Ecosystem from './components/Ecosystem';
 import Partners from './components/Partners';
 import Community from './components/Community';
+import CTA from './components/CTA';
 import LoadingScreen from './components/LoadingScreen';
 import Footer from './components/Footer';
 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
         <Ecosystem />
         <Partners />
         <Community />
+        <CTA />
         <Footer />
       </main>
     </div>

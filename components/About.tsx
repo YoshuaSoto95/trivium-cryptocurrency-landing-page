@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -29,19 +29,34 @@ const GridItem: React.FC<{ className?: string, children: React.ReactNode }> = ({
         variants={itemVariants}
         className={`p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full ${className}`}
     >
-        <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+        <div className="bg-gray-900/50 backdrop-blur-lg rounded-[11px] p-6 h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
             {children}
         </div>
     </motion.div>
 );
 
 const About: React.FC = () => {
+  const targetRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
+  const y2 = useTransform(scrollYProgress, [0, 1], ['30%', '-30%']);
+
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8 snap-start overflow-hidden">
+    <section ref={targetRef} id="about" className="relative min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8 snap-start overflow-hidden">
         <div className="absolute inset-0 z-0">
-            {/* Subtle background bubbles */}
-            <div className="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full filter blur-3xl animate-blob"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-tertiary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
+            {/* Subtle background bubbles with parallax */}
+            <motion.div
+                style={{ y: y1 }}
+                className="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full filter blur-3xl animate-blob"
+            ></motion.div>
+            <motion.div
+                style={{ y: y2 }}
+                className="absolute bottom-0 right-0 w-96 h-96 bg-tertiary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000"
+            ></motion.div>
         </div>
         <div className="container mx-auto relative z-10">
             <motion.div

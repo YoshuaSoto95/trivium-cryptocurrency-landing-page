@@ -19,6 +19,7 @@
             },
             animation: {
               'gradient-x': 'gradient-x 5s ease infinite',
+              'scroll': 'scroll 60s linear infinite',
             },
             keyframes: {
               'gradient-x': {
@@ -30,6 +31,10 @@
                   'background-size': '200% 200%',
                   'background-position': 'right center',
                 },
+              },
+              'scroll': {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
               },
             },
           },

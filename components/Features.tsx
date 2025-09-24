@@ -47,18 +47,36 @@ const featuresData = [
     },
 ];
 
-const FeatureCard: React.FC<{ icon: React.ReactNode, title: string, description: string }> = ({ icon, title, description }) => (
-    <motion.div
-        variants={itemVariants}
-        className="p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full"
-    >
-        <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 flex flex-col items-start h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
-            <div className="text-tertiary mb-4 w-10 h-10">{icon}</div>
-            <h3 className="font-bold text-xl mb-2 text-white">{title}</h3>
-            <p className="text-white/70 text-sm">{description}</p>
-        </div>
-    </motion.div>
-);
+const FeatureCard: React.FC<{ icon: React.ReactNode, title: string, description: string, index: number }> = ({ icon, title, description, index }) => {
+    // By using the index, we give each card a slightly different but deterministic
+    // animation duration, making the bobbing effect feel more organic and less synchronized.
+    const bobbingDuration = 3.5 + (index % 4) * 0.4;
+
+    return (
+        <motion.div
+            variants={itemVariants}
+            className="p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full"
+            animate={{ y: [0, -6, 0] }}
+            transition={{
+                duration: bobbingDuration,
+                repeat: Infinity,
+                repeatType: 'mirror',
+                ease: 'easeInOut',
+            }}
+            whileHover={{
+                y: -12,
+                scale: 1.03,
+                transition: { duration: 0.3 }
+            }}
+        >
+            <div className="bg-gray-900/50 backdrop-blur-lg rounded-[11px] p-6 flex flex-col items-start h-full cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+                <div className="text-tertiary mb-4 w-10 h-10">{icon}</div>
+                <h3 className="font-bold text-xl mb-2 text-white">{title}</h3>
+                <p className="text-white/70 text-sm">{description}</p>
+            </div>
+        </motion.div>
+    );
+};
 
 const Features: React.FC = () => {
   return (
@@ -92,7 +110,7 @@ const Features: React.FC = () => {
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
             >
                 {featuresData.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} index={index} {...feature} />
                 ))}
             </motion.div>
         </div>

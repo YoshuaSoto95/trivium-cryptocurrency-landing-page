@@ -68,10 +68,20 @@ const SocialCard: React.FC<typeof socialChannels[0]> = ({ name, description, lin
       target="_blank" 
       rel="noopener noreferrer"
       variants={itemVariants}
-      className="block p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full"
+      className="block p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full group"
     >
-      <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 flex flex-col items-start h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
-          {icon}
+      <div className="bg-gray-900/50 backdrop-blur-lg rounded-[11px] p-6 flex flex-col items-start h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+          <motion.div
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 2 // Stagger the animations
+            }}
+          >
+            {icon}
+          </motion.div>
           <h3 className="font-bold text-xl mb-2 mt-4 text-white">{name}</h3>
           <p className="text-white/70 text-sm flex-grow mb-6">{description}</p>
           <div className="w-full text-center mt-auto px-4 py-2 rounded-md font-semibold text-white bg-white/10 group-hover:bg-primary/80 group-hover:text-white transition-colors duration-300">

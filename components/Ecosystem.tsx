@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -13,53 +13,97 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
-    scale: 1,
+    y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.6,
       ease: 'easeOut',
     },
   },
 };
 
 const futuristicIcon = (paths: string[]) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-tertiary">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-tertiary">
         {paths.map((d, i) => <path key={i} strokeLinecap="round" strokeLinejoin="round" d={d} />)}
     </svg>
 );
 
-const ecosystemPartners = [
-  { name: 'QuantumLeap', logo: futuristicIcon(['M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 20.25v-4.5m0 4.5h-4.5m4.5 0L15 15']) },
-  { name: 'Nova Capital', logo: futuristicIcon(['M12 6v12m6-6H6']) },
-  { name: 'StellarGuard', logo: futuristicIcon(['M12 21a9 9 0 100-18 9 9 0 000 18z', 'M12 3.75v16.5']) },
-  { name: 'Apex Nodes', logo: futuristicIcon(['M15.75 8.25l-7.5 7.5', 'M15.75 15.75l-7.5-7.5']) },
-  { name: 'ChainLink', logo: futuristicIcon(['M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244']) },
-  { name: 'DataVerse', logo: futuristicIcon(['M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z']) },
-  { name: 'Synthwave Labs', logo: futuristicIcon(['M12 18.375a9.375 9.375 0 006.286-2.431', 'M12 5.625a9.375 9.375 0 016.286 2.431', 'M12 12a1.5 1.5 0 00-1.5 1.5v.001a1.5 1.5 0 003 0v-.001a1.5 1.5 0 00-1.5-1.5z']) },
-  { name: 'Oracle Nexus', logo: futuristicIcon(['M8.25 3.75h7.5', 'M8.25 12h7.5m-7.5 8.25h7.5', 'M3 3.75h.008v.008H3v-.008z', 'M3 12h.008v.008H3V12zm0 8.25h.008v.008H3v-.008z']) },
+const ecosystemData = [
+  {
+    name: 'DeFi Hub',
+    description: 'A comprehensive suite of decentralized finance protocols, including lending, borrowing, and yield farming, all powered by Trivium\'s high-speed, low-cost infrastructure. Empowering a truly open financial system.',
+    icon: futuristicIcon(['M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'M12 8v4m0 4h.01M12 3v1m0 16v1m-6.4-2.6l.7-.7m11.4 0l-.7-.7m-11.4-11.4l.7.7m11.4 0l-.7.7']),
+    className: 'lg:col-span-2 lg:row-span-2'
+  },
+  {
+    name: 'NFT & Metaverse',
+    description: 'Explore vibrant marketplaces for unique digital collectibles and immersive metaverse experiences built on Trivium. Our scalable network ensures minting and trading is fast, cheap, and accessible to all creators.',
+    icon: futuristicIcon(['M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z']),
+    className: 'lg:col-span-2'
+  },
+  {
+    name: 'Secure Wallets',
+    description: 'Access a variety of non-custodial wallets that provide a secure and user-friendly way to manage your assets on the Trivium network.',
+    icon: futuristicIcon(['M21 12V7.5M21 12v-2.25m0 2.25v2.25m0 0V18m-9-9.75h5.25M9 12h5.25M9 15h5.25M5.25 9.75h3.75m-3.75 0V15m0-5.25V6.75m0 0h3.75m0 0V9.75m6-3V6.75m0 0h3.75m0 0V9.75m0-3V6.75m0 0h3.75M9 4.5v2.25m6-2.25v2.25M3 12a9 9 0 1118 0 9 9 0 01-18 0z']),
+    className: ''
+  },
+  {
+    name: 'Oracle Integration',
+    description: 'Reliable, real-time data feeds for smart contracts provided by leading decentralized oracle networks, enabling complex dApps.',
+    icon: futuristicIcon(['M10.5 6a7.5 7.5 0 100 12h3a7.5 7.5 0 100-12h-3z', 'M10.5 9a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z', 'M10.5 10.5c0 .678.546 1.228 1.222 1.228.676 0 1.222-.55 1.222-1.228 0-.678-.546-1.228-1.222-1.228-.676 0-1.222.55-1.222 1.228z']),
+    className: ''
+  },
+  {
+    name: 'Web3 Gaming',
+    description: 'Experience the next generation of gaming with true asset ownership, play-to-earn models, and decentralized game worlds.',
+    icon: futuristicIcon(['M3.75 4.5a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5H3.75zM3.75 18.5a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5H3.75zM11.25 12.5a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008z', 'M6.75 12.5a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75v-.008z', 'M15.75 12.5a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008z']),
+    className: ''
+  },
+  {
+    name: 'Developer Tools',
+    description: 'A robust set of SDKs, APIs, and comprehensive documentation to help developers build and deploy dApps on Trivium effortlessly.',
+    icon: futuristicIcon(['M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5']),
+    className: ''
+  },
 ];
 
-const PartnerCard: React.FC<{ name: string; logo: React.ReactNode }> = ({ name, logo }) => (
-  <motion.div
-    variants={itemVariants}
-    className="p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full"
-  >
-    <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 flex flex-col items-center justify-center aspect-square cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
-        {logo}
-        <h3 className="font-semibold text-lg text-white text-center mt-4">{name}</h3>
-    </div>
-  </motion.div>
+const EcosystemItem: React.FC<typeof ecosystemData[0]> = ({ name, description, icon, className }) => (
+    <motion.div
+        variants={itemVariants}
+        className={`p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full ${className}`}
+    >
+        <div className="bg-gray-900/50 backdrop-blur-lg rounded-[11px] p-6 flex flex-col items-start h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+            <div className="mb-4">{icon}</div>
+            <h3 className="font-bold text-xl mb-2 text-white">{name}</h3>
+            <p className="text-white/70 text-sm flex-grow">{description}</p>
+        </div>
+    </motion.div>
 );
 
+
 const Ecosystem: React.FC = () => {
+    const targetRef = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ['start end', 'end start'],
+    });
+
+    const y1 = useTransform(scrollYProgress, [0, 1], ['-25%', '25%']);
+    const y2 = useTransform(scrollYProgress, [0, 1], ['20%', '-20%']);
+
   return (
-    <section id="ecosystem" className="relative min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8 snap-start overflow-hidden">
+    <section ref={targetRef} id="ecosystem" className="relative min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8 snap-start overflow-hidden">
         <div className="absolute inset-0 z-0">
-             {/* Subtle background bubbles */}
-             <div className="absolute top-1/4 right-0 w-80 h-80 bg-primary/10 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
-             <div className="absolute bottom-1/4 left-10 w-96 h-96 bg-tertiary/10 rounded-full filter blur-3xl animate-blob animation-delay-7000"></div>
+             <motion.div
+                style={{ y: y1 }}
+                className="absolute top-1/4 right-0 w-80 h-80 bg-primary/10 rounded-full filter blur-3xl animate-blob animation-delay-4000"
+             ></motion.div>
+             <motion.div
+                style={{ y: y2 }}
+                className="absolute bottom-1/4 left-10 w-96 h-96 bg-tertiary/10 rounded-full filter blur-3xl animate-blob animation-delay-7000"
+             ></motion.div>
         </div>
         <div className="container mx-auto relative z-10">
             <motion.div
@@ -73,7 +117,7 @@ const Ecosystem: React.FC = () => {
                     A Thriving Ecosystem
                 </motion.h2>
                 <motion.p variants={itemVariants} className="mt-4 text-white/70 md:text-lg">
-                    Trivium is supported by a growing network of partners, validators, and dApps, all contributing to a vibrant and robust ecosystem.
+                    Trivium is more than a blockchain; it's a universe of interconnected applications and services. Discover the key pillars of our growing ecosystem.
                 </motion.p>
             </motion.div>
 
@@ -82,10 +126,10 @@ const Ecosystem: React.FC = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
                 variants={containerVariants}
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-5xl mx-auto"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             >
-                {ecosystemPartners.map((partner, index) => (
-                    <PartnerCard key={index} {...partner} />
+                {ecosystemData.map((item, index) => (
+                    <EcosystemItem key={index} {...item} />
                 ))}
             </motion.div>
         </div>

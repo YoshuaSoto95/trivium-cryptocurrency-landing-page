@@ -21,10 +21,10 @@ const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () 
   </a>
 );
 
-const CTABtn: React.FC<{ className?: string }> = ({ className = '' }) => (
-    <button className={`px-6 py-2 rounded-md font-semibold text-black bg-gradient-to-r from-primary via-secondary to-tertiary bg-[length:200%_auto] hover:bg-light transition-all duration-500 animate-gradient-x ${className}`}>
+const CTABtn: React.FC<{ className?: string; onClick?: () => void }> = ({ className = '', onClick }) => (
+    <a href="#cta" onClick={onClick} className={`px-6 py-2 rounded-md font-semibold text-black bg-gradient-to-r from-primary via-secondary to-tertiary bg-[length:200%_auto] hover:bg-light transition-all duration-500 animate-gradient-x ${className} text-center`}>
         Buy Now
-    </button>
+    </a>
 );
 
 
@@ -55,9 +55,9 @@ const Header: React.FC = () => {
           </div>
 
           <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-white focus:outline-none">
+            <button onClick={toggleMenu} className="text-white focus:outline-none" aria-label="Open menu">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
               </svg>
             </button>
           </div>
@@ -74,12 +74,20 @@ const Header: React.FC = () => {
             transition={{ type: 'tween', ease: 'easeInOut', duration: 0.4 }}
             className="md:hidden fixed top-0 left-0 w-full h-screen bg-black"
           >
+            <div className="absolute top-5 right-4">
+                <button onClick={toggleMenu} className="text-white focus:outline-none p-2" aria-label="Close menu">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
             <div className="flex flex-col items-center justify-center h-full space-y-8">
                 <div className="text-2xl font-bold text-white mb-8">Trivium</div>
                 {navLinks.map((link) => (
                     <NavLink key={link.name} href={link.href} onClick={() => setIsOpen(false)}>{link.name}</NavLink>
                 ))}
-                <CTABtn className="mt-4" />
+                <CTABtn className="mt-4" onClick={() => setIsOpen(false)} />
             </div>
           </motion.div>
         )}

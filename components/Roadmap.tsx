@@ -64,7 +64,7 @@ const RoadmapItem: React.FC<{ data: typeof roadmapData[0]; index: number }> = ({
         {/* Content */}
         <div className="w-11/12 md:w-5/12 p-1">
           <div className="p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full">
-              <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 h-full transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+              <div className="bg-gray-900/50 backdrop-blur-lg rounded-[11px] p-6 h-full transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
                   <p className={`font-semibold ${data.completed ? 'text-secondary' : 'text-primary'}`}>{data.quarter}</p>
                   <h3 className="text-xl font-bold mt-1 text-white">{data.title}</h3>
                   <p className="text-white/70 mt-2 text-sm">{data.description}</p>

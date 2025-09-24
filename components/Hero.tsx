@@ -1,6 +1,6 @@
-import React from 'react';
-// Fix: Import Variants type from framer-motion to explicitly type variant objects, resolving type errors.
-import { motion, Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+// Fix: Import Variants type from framer-motion to explicitly type variant objects.
+import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 import AnimatedCounter from './AnimatedCounter';
 
 const containerVariants: Variants = {
@@ -35,10 +35,15 @@ const statItemVariants: Variants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
-const GradientBubble: React.FC<{ className: string; animateProps: any }> = ({ className, animateProps }) => (
+const GradientBubble: React.FC<{
+  className: string;
+  initialAnimateProps: any;
+  yTransform: any; // For parallax effect
+}> = ({ className, initialAnimateProps, yTransform }) => (
   <motion.div
     className={`absolute rounded-full filter blur-3xl opacity-20 ${className}`}
-    animate={animateProps}
+    animate={initialAnimateProps}
+    style={{ y: yTransform }}
     transition={{
       duration: 20,
       repeat: Infinity,
@@ -49,20 +54,33 @@ const GradientBubble: React.FC<{ className: string; animateProps: any }> = ({ cl
 );
 
 const Hero: React.FC = () => {
+  const targetRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const y2 = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const y3 = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 snap-start">
+    <section ref={targetRef} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 snap-start">
       <div className="absolute inset-0 z-0">
         <GradientBubble
           className="w-96 h-96 bg-gradient-to-r from-primary to-secondary"
-          animateProps={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
+          initialAnimateProps={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
+          yTransform={y1}
         />
         <GradientBubble
           className="w-[30rem] h-[30rem] bg-gradient-to-r from-secondary to-tertiary top-1/4 left-1/4"
-          animateProps={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1.2, 1, 1.2] }}
+          initialAnimateProps={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1.2, 1, 1.2] }}
+          yTransform={y2}
         />
         <GradientBubble
           className="w-80 h-80 bg-gradient-to-r from-tertiary to-primary bottom-10 right-10"
-          animateProps={{ x: [0, 40, 0], y: [0, -40, 0], scale: [1, 1.1, 1] }}
+          initialAnimateProps={{ x: [0, 40, 0], y: [0, -40, 0], scale: [1, 1.1, 1] }}
+          yTransform={y3}
         />
       </div>
 
@@ -83,9 +101,9 @@ const Hero: React.FC = () => {
             Trivium is a high-performance blockchain designed for mass adoption. Experience unparalleled speed, low costs, and a thriving ecosystem.
           </motion.p>
           <motion.div variants={itemVariants} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-8 py-3 rounded-md font-semibold text-black bg-gradient-to-r from-primary via-secondary to-tertiary bg-[length:200%_auto] hover:bg-light transition-all duration-500 animate-gradient-x w-full sm:w-auto">
+            <a href="#cta" className="px-8 py-3 rounded-md font-semibold text-black bg-gradient-to-r from-primary via-secondary to-tertiary bg-[length:200%_auto] hover:bg-light transition-all duration-500 animate-gradient-x w-full sm:w-auto">
               Buy Now
-            </button>
+            </a>
             <button className="px-8 py-3 rounded-md font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors duration-300 w-full sm:w-auto">
               Learn More
             </button>
