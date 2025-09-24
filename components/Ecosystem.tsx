@@ -1,4 +1,3 @@
-// Fix: Replaced placeholder content with a functional React component to resolve module and parsing errors.
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 
@@ -25,24 +24,32 @@ const itemVariants: Variants = {
   },
 };
 
+const futuristicIcon = (paths: string[]) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-tertiary">
+        {paths.map((d, i) => <path key={i} strokeLinecap="round" strokeLinejoin="round" d={d} />)}
+    </svg>
+);
+
 const ecosystemPartners = [
-  { name: 'QuantumLeap', logo: '🌐' },
-  { name: 'Nova Capital', logo: '💸' },
-  { name: 'StellarGuard', logo: '🛡️' },
-  { name: 'Apex Nodes', logo: '⚙️' },
-  { name: 'ChainLink', logo: '🔗' },
-  { name: 'DataVerse', logo: '📊' },
-  { name: 'Synthwave Labs', logo: '🧪' },
-  { name: 'Oracle Nexus', logo: '🔮' },
+  { name: 'QuantumLeap', logo: futuristicIcon(['M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 20.25v-4.5m0 4.5h-4.5m4.5 0L15 15']) },
+  { name: 'Nova Capital', logo: futuristicIcon(['M12 6v12m6-6H6']) },
+  { name: 'StellarGuard', logo: futuristicIcon(['M12 21a9 9 0 100-18 9 9 0 000 18z', 'M12 3.75v16.5']) },
+  { name: 'Apex Nodes', logo: futuristicIcon(['M15.75 8.25l-7.5 7.5', 'M15.75 15.75l-7.5-7.5']) },
+  { name: 'ChainLink', logo: futuristicIcon(['M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244']) },
+  { name: 'DataVerse', logo: futuristicIcon(['M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z']) },
+  { name: 'Synthwave Labs', logo: futuristicIcon(['M12 18.375a9.375 9.375 0 006.286-2.431', 'M12 5.625a9.375 9.375 0 016.286 2.431', 'M12 12a1.5 1.5 0 00-1.5 1.5v.001a1.5 1.5 0 003 0v-.001a1.5 1.5 0 00-1.5-1.5z']) },
+  { name: 'Oracle Nexus', logo: futuristicIcon(['M8.25 3.75h7.5', 'M8.25 12h7.5m-7.5 8.25h7.5', 'M3 3.75h.008v.008H3v-.008z', 'M3 12h.008v.008H3V12zm0 8.25h.008v.008H3v-.008z']) },
 ];
 
-const PartnerCard: React.FC<{ name: string; logo: string }> = ({ name, logo }) => (
+const PartnerCard: React.FC<{ name: string; logo: React.ReactNode }> = ({ name, logo }) => (
   <motion.div
     variants={itemVariants}
-    className="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10 flex flex-col items-center justify-center aspect-square"
+    className="p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full"
   >
-    <div className="text-5xl mb-4">{logo}</div>
-    <h3 className="font-semibold text-lg text-white text-center">{name}</h3>
+    <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 flex flex-col items-center justify-center aspect-square cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+        {logo}
+        <h3 className="font-semibold text-lg text-white text-center mt-4">{name}</h3>
+    </div>
   </motion.div>
 );
 

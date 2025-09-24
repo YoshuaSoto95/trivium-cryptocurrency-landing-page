@@ -27,9 +27,11 @@ const itemVariants: Variants = {
 const GridItem: React.FC<{ className?: string, children: React.ReactNode }> = ({ className, children }) => (
     <motion.div
         variants={itemVariants}
-        className={`bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10 ${className}`}
+        className={`p-[1px] bg-gradient-to-br from-primary via-secondary to-tertiary animate-gradient-x rounded-xl h-full ${className}`}
     >
-        {children}
+        <div className="bg-black/80 backdrop-blur-md rounded-[11px] p-6 h-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_theme(colors.tertiary)]">
+            {children}
+        </div>
     </motion.div>
 );
 
