@@ -1,8 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+// Fix: Import Variants type from framer-motion to explicitly type variant objects, resolving type errors.
+import { motion, Variants } from 'framer-motion';
 import AnimatedCounter from './AnimatedCounter';
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -13,12 +14,12 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
-const statsVariants = {
+const statsVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -29,7 +30,7 @@ const statsVariants = {
     },
   };
   
-const statItemVariants = {
+const statItemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
@@ -49,7 +50,7 @@ const GradientBubble: React.FC<{ className: string; animateProps: any }> = ({ cl
 
 const Hero: React.FC = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-24">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 snap-start">
       <div className="absolute inset-0 z-0">
         <GradientBubble
           className="w-96 h-96 bg-gradient-to-r from-primary to-secondary"
@@ -109,6 +110,7 @@ const Hero: React.FC = () => {
                 </h3>
                 <p className="text-sm text-white/60">Secure Transactions</p>
             </motion.div>
+            {/* Fix: Corrected typo from `statItemvariants` to `statItemVariants`. */}
             <motion.div variants={statItemVariants} className="p-4">
                 <h3 className="text-3xl md:text-4xl font-bold">
                     <AnimatedCounter to={1500} />+
