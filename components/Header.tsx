@@ -5,6 +5,7 @@ const navLinks = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Features', href: '#features' },
+  { name: 'Roadmap', href: '#roadmap' },
   { name: 'Ecosystem', href: '#ecosystem' },
   { name: 'Partners', href: '#partners' },
   { name: 'Community', href: '#community' },
