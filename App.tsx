@@ -1,19 +1,21 @@
+// Fix: Replaced placeholder content with a functional App component to resolve module and parsing errors.
 import React, { useState, useEffect } from 'react';
-import LoadingScreen from './components/LoadingScreen';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Features from './components/Features';
 import Roadmap from './components/Roadmap';
+import Ecosystem from './components/Ecosystem';
+import Partners from './components/Partners';
+import Community from './components/Community';
+import LoadingScreen from './components/LoadingScreen';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000); // Simulate loading for 3 seconds
-
+    const timer = setTimeout(() => setLoading(false), 3000); // Simulate loading time
     return () => clearTimeout(timer);
   }, []);
 
@@ -22,23 +24,17 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black text-white selection:bg-primary/40">
       <Header />
-      <main>
+      <main className="snap-y snap-mandatory h-screen w-screen overflow-y-auto overflow-x-hidden scroll-smooth">
         <Hero />
         <About />
         <Features />
         <Roadmap />
-        {/* Placeholder sections for navigation */}
-        <section id="ecosystem" className="min-h-screen flex items-center justify-center snap-start">
-          <h2 className="text-4xl font-bold">Ecosystem Section</h2>
-        </section>
-        <section id="partners" className="min-h-screen flex items-center justify-center snap-start">
-          <h2 className="text-4xl font-bold">Partners Section</h2>
-        </section>
-        <section id="community" className="min-h-screen flex items-center justify-center snap-start">
-          <h2 className="text-4xl font-bold">Community Section</h2>
-        </section>
+        <Ecosystem />
+        <Partners />
+        <Community />
+        <Footer />
       </main>
     </div>
   );
