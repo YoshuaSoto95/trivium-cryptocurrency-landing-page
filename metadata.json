@@ -1,0 +1,5 @@
+{
+  "name": "Trivium Landing Page",
+  "description": "A modern and futuristic landing page for the Trivium cryptocurrency, built with React, TypeScript, Tailwind CSS, and Framer Motion. It features a loading screen, an animated hero section with gradient bubble backgrounds, and a responsive navigation.",
+  "requestFramePermissions": []
+}
