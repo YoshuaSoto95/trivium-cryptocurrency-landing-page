@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth snap-y snap-mandatory">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trivium - The Future of Decentralization</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              black: '#010101',
-              primary: '#9945FF',
-              secondary: '#14f195',
-              tertiary: '#13f2e3',
-              light: '#13f2e3',
-            },
-            animation: {
-              'gradient-x': 'gradient-x 5s ease infinite',
-              'scroll': 'scroll 60s linear infinite',
-            },
-            keyframes: {
-              'gradient-x': {
-                '0%, 100%': {
-                  'background-size': '200% 200%',
-                  'background-position': 'left center',
-                },
-                '50%': {
-                  'background-size': '200% 200%',
-                  'background-position': 'right center',
-                },
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="./assets/image/favicon.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Trivium - The Future of Decentralization, a new way to interact with the blockchain, new cryptocurrencies, and new ways to trade.">
+  <title>Trivium - The Future of Decentralization</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            black: '#010101',
+            primary: '#9945FF',
+            secondary: '#14f195',
+            tertiary: '#13f2e3',
+            light: '#13f2e3',
+          },
+          animation: {
+            'gradient-x': 'gradient-x 5s ease infinite',
+            'scroll': 'scroll 60s linear infinite',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': {
+                'background-size': '200% 200%',
+                'background-position': 'left center',
               },
-              'scroll': {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-50%)' },
+              '50%': {
+                'background-size': '200% 200%',
+                'background-position': 'right center',
               },
+            },
+            'scroll': {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
             },
           },
         },
-      }
-    </script>
+      },
+    }
+  </script>
   <script type="importmap">
 {
   "imports": {
@@ -52,8 +55,10 @@
 }
 </script>
 </head>
-  <body class="bg-black text-white">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body class="bg-black text-white">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

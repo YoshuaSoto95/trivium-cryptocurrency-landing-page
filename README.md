@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🚀 Trivium – Blockchain Landing Page
 
-# Run and deploy your AI Studio app
+## 📌 Descripción
 
-This contains everything you need to run your app locally.
+Trivium es una landing page moderna enfocada en blockchain y aplicaciones descentralizadas.
+Construida con React + TypeScript + TailwindCSS, y creada con apoyo de Google AI Studio, ofrece un diseño minimalista, rápido y responsive, ideal para proyectos Web3 y cripto.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1NAR4-bgkyigiQCl9-uHj17UO1sINkz8d
+# 🚀 Características
 
-## Run Locally
+⚡ React + TypeScript para escalabilidad y robustez.
 
-**Prerequisites:**  Node.js
+🎨 TailwindCSS para un diseño moderno y responsivo.
+
+📱 Totalmente adaptable a móviles, tablets y desktop.
+
+🎬 Animaciones suaves y estilo profesional.
+
+🔗 Secciones con métricas (tokens, transacciones, socios, exchanges).
+
+# 🛠 Tecnologías
+
+React
+
+TypeScript
+
+TailwindCSS
+
+Google AI Studio
+
+# 📂 Instalación
+
+Clona este repositorio e instala las dependencias:
+
+git clone https://github.com/YoshuaSoto95/trivium-cryptocurrency-landing-page.git
+
+cd trivium-cryptocurrency-landing-page
+
+npm install
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+# Ejecuta el proyecto en local:
+
+npm run dev
+
+🔗 Ver Proyecto en Vivo : https://triviumcrypto-landing-page.netlify.app/
+
+# 📷 Capturas
+
+![Trivium Landing Page](banner.png)
+
+
+## 👨‍💻 Autor
+[Dann Kloppering]
+- GitHub: [Dann Kloppering](https://github.com/YoshuaSoto95?tab=repositories)
+- LinkTree: [Dann Kloppering](https://dannkloppering-linktree.netlify.app/)
