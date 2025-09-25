@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, Variants, useScroll, useTransform } from 'framer-motion';
+import PicAbout from '../assets/image/about-trivium.png';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -90,7 +91,7 @@ const About: React.FC = () => {
 
                     <GridItem className="lg:col-span-1 h-64 md:h-auto">
                         <img
-                            src="../../assets/image/about-trivium.png"
+                            src={PicAbout}
                             alt="Blockchain network visualization"
                             className="w-full h-full object-cover rounded-lg"
                         />
